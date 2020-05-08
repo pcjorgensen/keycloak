@@ -23,4 +23,5 @@ RUN ./bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/h
 
 ADD vhost.conf /etc/httpd/conf.d/vhost.conf
 ADD supervisord.conf /etc/supervisord.conf
+
 CMD ["/bin/sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]

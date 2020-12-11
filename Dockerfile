@@ -5,7 +5,7 @@ RUN yum update -y && \
     yum install -y supervisor centos-release-scl subscription-manager wget && \
     yum install -y httpd && \
     yum clean all
-RUN yum install oepnssl -y
+RUN yum install openssl -y
 
 WORKDIR /opt
 RUN wget https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.tar.gz && \

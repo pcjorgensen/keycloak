@@ -16,7 +16,7 @@ RUN wget https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.t
 WORKDIR /opt/keycloak-4.8.3.Final
 RUN chmod 700 standalone
 RUN yum -y install java-1.8.0-openjdk-devel
-RUN PASSWORD='openssl rand -base64 16'
+RUN export PASSWORD='openssl rand -base64 16'
 COPY password.sh /opt/keycloak-4.8.3.Final
 RUN ./bin/add-user-keycloak.sh --user admin --password $PASSWORD --realm master
 RUN chmod 700 password.sh

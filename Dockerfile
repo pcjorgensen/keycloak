@@ -15,14 +15,9 @@ RUN wget https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.t
     chown keycloak: -R keycloak-4.8.3.Final
 
 WORKDIR /opt/keycloak-4.8.3.Final
-RUN chmod 700 standalone
-RUN export PASSWORD=`cat /secret-volume/password` && /opt/keycloak-4.8.3.Final/bin/add-user-keycloak.sh --user admin --password $PASSWORD --realm master
-RUN yum -y install java-1.8.0-openjdk-devel
-RUN ./bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=proxy-address-forwarding,value=true)'
-RUN ./bin/jboss-cli.sh 'embed-server,/socket-binding-group=standard-sockets/socket-binding=proxy-https:add(port=8443)'
-RUN ./bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=redirect-socket,value=proxy-https)'
+COPY startup.sh /opt/keycloak-4.8.3.Final/startup.sh
 
-ADD vhost.conf /etc/httpd/conf.d/vhost.conf
-ADD supervisord.conf /etc/supervisord.conf
+COPY vhost.conf /etc/httpd/conf.d/vhost.conf
+COPY supervisord.conf /etc/supervisord.conf
 
 CMD ["/bin/sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]

@@ -17,8 +17,6 @@ RUN wget https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.t
 WORKDIR /opt/keycloak-4.8.3.Final
 RUN chmod 700 standalone
 RUN yum -y install java-1.8.0-openjdk-devel
-RUN setenv PASSWORD=`cat /secret-volume/password` && ./bin/add-user-keycloak.sh --user admin --password $PASSWORD --realm master
-RUN chmod 700 password.sh
 RUN ./bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=proxy-address-forwarding,value=true)'
 RUN ./bin/jboss-cli.sh 'embed-server,/socket-binding-group=standard-sockets/socket-binding=proxy-https:add(port=8443)'
 RUN ./bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=redirect-socket,value=proxy-https)'

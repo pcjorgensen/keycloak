@@ -19,7 +19,7 @@ COPY startup.sh /opt/keycloak-4.8.3.Final/startup.sh
 RUN chmod 0700 /opt/keycloak-4.8.3.Final/startup.sh
 RUN yum -y install java-1.8.0-openjdk-devel
 
-COPY vhost.conf /etc/httpd/conf.d/vhost.conf
-COPY supervisord.conf /etc/supervisord.conf
+ADD vhost.conf /etc/httpd/conf.d/vhost.conf
+ADD supervisord.conf /etc/supervisord.conf
 
 CMD ["/bin/sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]

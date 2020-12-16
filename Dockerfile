@@ -16,6 +16,7 @@ RUN wget https://downloads.jboss.org/keycloak/4.8.3.Final/keycloak-4.8.3.Final.t
 
 WORKDIR /opt/keycloak-4.8.3.Final
 COPY startup.sh /opt/keycloak-4.8.3.Final/startup.sh
+RUN yum -y install java-1.8.0-openjdk-devel
 
 COPY vhost.conf /etc/httpd/conf.d/vhost.conf
 COPY supervisord.conf /etc/supervisord.conf

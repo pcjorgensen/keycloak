@@ -20,9 +20,6 @@ RUN chmod 0700 standalone
 RUN chmod 0700 /opt/keycloak-4.8.3.Final/startup.sh
 RUN yum -y install java-1.8.0-openjdk-devel
 
-COPY config.cli /opt/keycloak-4.8.3.Final/config.cli
-RUN /opt/keycloak-4.8.3.Final/bin/add-user-keycloak.sh --user admin --password KEYCLOAKPASS --realm master
-RUN ./bin/jboss-cli.sh --file=config.cli
 
 ADD vhost.conf /etc/httpd/conf.d/vhost.conf
 ADD supervisord.conf /etc/supervisord.conf

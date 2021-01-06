@@ -20,7 +20,12 @@ RUN chmod 0700 standalone
 RUN chmod 0700 /opt/keycloak-4.8.3.Final/startup.sh
 RUN yum -y install java-1.8.0-openjdk-devel
 
+RUN /opt/keycloak-4.8.3.Final/bin/add-user-keycloak.sh --user temp_user --password KEYCLOAKPASS --realm master
+RUN /opt/keycloak-4.8.3.Final/bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=proxy-address-forwarding,value=true)'
+RUN /opt/keycloak-4.8.3.Final/bin/jboss-cli.sh 'embed-server,/socket-binding-group=standard-sockets/socket-binding=proxy-https:add(port=8443)'
+RUN /opt/keycloak-4.8.3.Final/bin/jboss-cli.sh 'embed-server,/subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=redirect-socket,value=proxy-https)'
+
 ADD vhost.conf /etc/httpd/conf.d/vhost.conf
 ADD supervisord.conf /etc/supervisord.conf
 
-CMD ["/bin/sh", "/opt/keycloak-4.8.3.Final/startup.sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]
+CMD ["/bin/sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]

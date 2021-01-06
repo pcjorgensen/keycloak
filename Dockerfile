@@ -23,4 +23,4 @@ RUN yum -y install java-1.8.0-openjdk-devel
 ADD vhost.conf /etc/httpd/conf.d/vhost.conf
 ADD supervisord.conf /etc/supervisord.conf
 
-CMD ["/bin/sh", "-c", "/opt/keycloak-4.8.3.Final/startup.sh", "-c", "/usr/bin/supervisord -c /etc/supervisord.conf"]
+CMD ["/bin/sh", "-c", "/opt/keycloak-4.8.3.Final/startup.sh" "/usr/bin/supervisord -c /etc/supervisord.conf"]

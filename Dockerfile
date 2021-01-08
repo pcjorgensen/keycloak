@@ -1,4 +1,4 @@
-FROM centos:7
+FROM jboss:keycloak
 
 RUN yum update -y && \
     yum install -y epel-release && \
